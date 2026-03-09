@@ -5,7 +5,7 @@
 ---
 
 ## 👤 Project Creator
-**Created by: Gaurav**\n
+**Created by: Gaurav**
 **Created by: Gourav**
 
 ---
