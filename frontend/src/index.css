@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@300;400;500;700&family=Orbitron:wght@400;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-nx-void:      #070B14;
+  --color-nx-dark:      #0D1421;
+  --color-nx-panel:     #0F1925;
+  --color-nx-border:    #1A2940;
+  --color-nx-lime:      #CCFF00;
+  --color-nx-lime-dim:  #CCFF0040;
+  --color-nx-cyan:      #00E5FF;
+  --color-nx-red:       #FF2D55;
+  --color-nx-amber:     #FFB300;
+  --color-nx-text:      #C8D8E8;
+  --color-nx-muted:     #4A6080;
+  --font-mono: 'IBM Plex Mono', 'Space Mono', 'Courier New', monospace;
+  --font-display: 'Orbitron', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root {
+  width: 100%; height: 100%;
+  margin: 0; padding: 0;
+  overflow: hidden;
+  background: #070B14;
+}
+
+body {
+  font-family: var(--font-mono);
+  color: var(--color-nx-text);
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.03em;
+}
+
+/* ── Scanline overlay ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* ── Technical grid ── */
+.nx-grid-bg {
+  background-image:
+    linear-gradient(rgba(204,255,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(204,255,0,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ── Panel ── */
+.nx-panel {
+  background: rgba(13,20,33,0.88);
+  border: 1px solid #1A2940;
+  backdrop-filter: blur(16px);
+  position: relative;
+}
+.nx-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 24px; height: 24px;
+  border-top: 2px solid #CCFF00;
+  border-left: 2px solid #CCFF00;
+  pointer-events: none;
+}
+.nx-panel::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 24px; height: 24px;
+  border-bottom: 2px solid #CCFF0060;
+  border-right: 2px solid #CCFF0060;
+  pointer-events: none;
+}
+
+/* ── Panel header ── */
+.nx-panel-header {
+  border-bottom: 1px solid #1A2940;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nx-panel-id {
+  font-size: 8px;
+  color: #CCFF00;
+  letter-spacing: 0.15em;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.nx-label {
+  font-size: 8px;
+  color: #4A6080;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+.nx-value {
+  font-size: 11px;
+  color: #C8D8E8;
+  font-family: var(--font-mono);
+  font-weight: 400;
+}
+.nx-value-lg {
+  font-size: 28px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #CCFF00;
+  line-height: 1;
+}
+.nx-value-xl {
+  font-size: 48px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #CCFF00;
+  line-height: 1;
+}
+
+/* ── Status dots ── */
+.nx-dot-live { width: 6px; height: 6px; border-radius: 50%; background: #CCFF00; animation: nx-blink 1.2s ease-in-out infinite; }
+.nx-dot-off  { width: 6px; height: 6px; border-radius: 50%; background: #FF2D55; }
+@keyframes nx-blink { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
+
+/* ── Ticker ── */
+.nx-ticker-track { display: flex; white-space: nowrap; animation: nx-ticker 35s linear infinite; }
+@keyframes nx-ticker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+
+/* ── Divider ── */
+.nx-divider { border: none; border-top: 1px solid #1A2940; margin: 8px 0; }
+
+/* ── Severity badges ── */
+.nx-badge-high   { color: #FF2D55; font-size: 8px; letter-spacing: 0.12em; font-weight: 700; }
+.nx-badge-medium { color: #FFB300; font-size: 8px; letter-spacing: 0.12em; font-weight: 700; }
+.nx-badge-low    { color: #CCFF00; font-size: 8px; letter-spacing: 0.12em; font-weight: 700; }
+
+/* ── Search input ── */
+.nx-search {
+  background: rgba(7,11,20,0.95);
+  border: 1px solid #1A2940;
+  color: #CCFF00;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  outline: none;
+  caret-color: #CCFF00;
+  transition: border-color 0.2s;
+}
+.nx-search:focus { border-color: #CCFF0080; }
+.nx-search::placeholder { color: #4A6080; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0D1421; }
+::-webkit-scrollbar-thumb { background: #1A2940; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #CCFF0060; }
